@@ -11,7 +11,7 @@ export const useInitializeWebsocket = () => {
 			ws.current = new WebSocket("ws:localhost:8000");
 			ws.current.onmessage = e => {
 				const { asks, bids }: OrderbookMessage = JSON.parse(e.data);
-				setSpread(asks[0]?.price - bids[0]?.price);
+				setSpread(asks[asks.length - 1]?.price - bids[0]?.price);
 				setAsks(asks);
 				setBids(bids);
 			};

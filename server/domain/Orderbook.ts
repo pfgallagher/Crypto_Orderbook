@@ -38,7 +38,7 @@ export class Orderbook {
 
 	public publish = (): string =>
 		JSON.stringify({
-			asks: this.askHeap.nLargest(5),
+			asks: this.askHeap.nLargest(5).reverse(),
 			bids: this.bidHeap.nLargest(5),
 		});
 
