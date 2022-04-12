@@ -1,5 +1,5 @@
 import Heap from "heap";
-import type { Order, Open, Change, Match } from "./types";
+import type { Order, Open, Change, Match, OrderOutput } from "./types";
 
 export interface OrderbookHeap extends Heap<Order> {
 	/*
@@ -71,8 +71,28 @@ export class OrderbookHeap extends Heap<Order> {
 		}
 	};
 
-	public nLargest = (n: number): Order[] =>
-		Heap.nlargest(this.nodes, n, this.cmp);
+	public nLargest = (n: number): OrderOutput[] => {
+		const safetyFactor = 10;
+		const largestWithPossibleDuplicates = Heap.nlargest(
+			this.nodes,
+			n * safetyFactor,
+			this.cmp,
+		);
+		const largest: { [price: number]: number } = {};
+		for (const { price, quantity } of largestWithPossibleDuplicates) {
+			if (largest.hasOwnProperty(price)) {
+				largest[price] += quantity;
+			} else {
+				largest[price] = quantity;
+			}
+			if (Object.keys(largest).length === n + 1) {
+				break;
+			}
+		}
+		return Object.entries(largest)
+			.map<[number, number]>(([p, q]) => [Number.parseFloat(p), q])
+			.slice(0, n);
+	};
 
 	public nSmallest = (n: number): Order[] =>
 		Heap.nsmallest(this.nodes, n, this.cmp);

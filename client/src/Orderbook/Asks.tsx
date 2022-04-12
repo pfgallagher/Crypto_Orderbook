@@ -6,7 +6,7 @@ export const Asks: FunctionComponent<Record<string, unknown>> = () => {
 	const { asks } = useOrderbookContext();
 	return (
 		<>
-			{asks.map(({ price, quantity }, i) => (
+			{asks.map(([price, quantity], i) => (
 				<TR key={`Ask-${i}`}>
 					<TD />
 					<Price>{price.toFixed(2)}</Price>

@@ -53,6 +53,8 @@ export interface Order {
 	price: number;
 }
 
+export type OrderOutput = [number, number]; // [price, quantity]
+
 export interface Snapshot {
 	asks: [string, string, string][];
 	bids: [string, string, string][];

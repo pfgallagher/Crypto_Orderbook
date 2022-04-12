@@ -1,8 +1,4 @@
-interface Order {
-	id: string;
-	quantity: number;
-	price: number;
-}
+type Order = [number, number]; // [price, quantity]
 
 export type Asks = Order[];
 export type Bids = Order[];

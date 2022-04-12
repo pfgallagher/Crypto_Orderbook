@@ -47,8 +47,10 @@ export class Orderbook {
 	private crossPrevention = (): void => {
 		const bestBid = this.bidHeap.nLargest(1)[0];
 		const bestAsk = this.askHeap.nLargest(1)[0];
-		if (bestAsk.price <= bestBid.price) {
-			console.log(`Crossed! ${bestAsk.price} | ${bestBid.price}`)
+		if (bestAsk[0] <= bestBid[0]) {
+			throw new Error(
+				`The Orderbook crossed! Best Ask: ${bestAsk[0]} | Best Bid: ${bestBid[0]}`,
+			);
 		}
 	};
 
