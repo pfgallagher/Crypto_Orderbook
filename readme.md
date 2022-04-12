@@ -9,6 +9,12 @@ $ cd server && npm i && npm start
 $ cd client && npm i && npm start
 ```
 
+## Testing
+
+```
+$ cd server && npm i && npm test
+```
+
 ## Tech
 
 - TypeScript, Node, React, WebSockets
