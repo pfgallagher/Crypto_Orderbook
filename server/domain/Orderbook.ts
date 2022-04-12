@@ -11,15 +11,17 @@ export class Orderbook {
 	private snapshotSequence = Infinity;
 
 	public applySnapshot = async (): Promise<void> => {
-		try {
-			const { asks, bids, sequence } = await getSnapshot();
-			this.askHeap.fromSnapshot(asks);
-			this.bidHeap.fromSnapshot(bids);
-			this.snapshotSequence = sequence;
-			this.isSnapshotApplied = true;
-		} catch (err) {
-			console.error("Failed to apply snapshot.");
-		}
+		setTimeout(async () => {
+			try {
+				const { asks, bids, sequence } = await getSnapshot();
+				this.askHeap.fromSnapshot(asks);
+				this.bidHeap.fromSnapshot(bids);
+				this.snapshotSequence = sequence;
+				this.isSnapshotApplied = true;
+			} catch (err) {
+				console.error("Failed to apply snapshot.");
+			}
+		}, 1000);
 	};
 
 	public enqueueMessage = (data: RawData): void => {
@@ -46,7 +48,7 @@ export class Orderbook {
 		const bestBid = this.bidHeap.nLargest(1)[0];
 		const bestAsk = this.askHeap.nLargest(1)[0];
 		if (bestAsk.price <= bestBid.price) {
-			this.bidHeap.deleteOrder(bestBid.id);
+			console.log(`Crossed! ${bestAsk.price} | ${bestBid.price}`)
 		}
 	};
 

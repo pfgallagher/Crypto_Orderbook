@@ -11,7 +11,7 @@ const OB = new Orderbook();
 
 const ws = new WebSocket(COINBASE_URL)
 	.on("open", async () => {
-		subscribeToBTCFeed(ws);
+		await subscribeToBTCFeed(ws);
 		await OB.applySnapshot();
 	})
 	.on("message", data => {
